@@ -1,0 +1,35 @@
+1 How much latency,traffic ,error rate
+Saturation - whether 1 gb ram used or not..
+
+Types of Monitoring systems
+WHitebox and blackbox
+
+whitebox- opened box
+balckbox - something like closed box
+
+promotheus is whitebox application
+ - it can look inside the application <- advantages
+ - push vs pull - its pull mechanism
+    promethos goes to every agent and pull the info
+- its historic data
+    trend graph
+
+- Inspired from BORGMON (GOOGLE monitoring systems)
+ - CNCF 2nd project
+ - CNCF 1st project is kubernetes
+
+1. Monitoring system and TSDB ( Time series DB)
+2.Instrumentation  of certain process
+3.Metric Collection and storage
+4.quering
+5.alerting
+6.dashboard/trend graph/
+
+doesnt do
+1.Raw log/event log (ELK)
+2. No Long term storage (Thanos will do ) only store 15 days data
+3.no auto scaling
+4.no authentication
+
+
+
