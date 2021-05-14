@@ -1,3 +1,4 @@
+S45:
 1 How much latency,traffic ,error rate
 Saturation - whether 1 gb ram used or not..
 
@@ -30,6 +31,44 @@ doesnt do
 2. No Long term storage (Thanos will do ) only store 15 days data
 3.no auto scaling
 4.no authentication
+
+Prometheus - Grafana- alert manager
+install prometheus - start the systemd service
+at node server - install prometheus-node-exporter
+prometheus.service
+now prometheus start at 9090
+public.ip:9090 - will load the graph
+
+go to /opt/prometheus
+edit the prometheus.yml file
+and add
+- job_name
+  scrape_configs:
+  target 172.31.25.181:9100 - node ip address:9100
+
+for grafana - install grafana
+ port is 3000
+ node ipaddress:3000 - grafana graph
+
+ node_systemd_unit_state
+
+Service Discovery in Prometheus :
+ec2_sd_config - ec2 service discovery config
+https://www.robustperception.io/automatically-monitoring-ec2-instances
+1.To start with, I spun up two EC2 instances running the node exporter.
+I ensured that ports 9100 and 9090 were open in the Security Group.
+2. Next I setup an IAM user with the AmazonEC2ReadOnlyAccess policy, noting down the access and secret key.
+This policy gives the user permission to list EC2 instances.
+https://prometheus.io/docs/prometheus/latest/configuration/configuration/#ec2_sd_config
+3.    ec2_sd_configs:
+        - region: us-east-1
+          access_key: PUT_THE_ACCESS_KEY_HERE
+          secret_key: PUT_THE_SECRET_KEY_HERE
+          port: 9100
+4.relabel_configs:   // tag name will display
+        - source_labels: [__meta_ec2_tag_Name]
+          target_label: instance
+
 
 
 
