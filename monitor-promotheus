@@ -46,7 +46,7 @@ and add
   scrape_configs:
   target 172.31.25.181:9100 - node ip address:9100
 
-for grafana - install grafana
+for grafana - install grafana add datasource prometheus
  port is 3000
  node ipaddress:3000 - grafana graph
 
@@ -70,5 +70,19 @@ https://prometheus.io/docs/prometheus/latest/configuration/configuration/#ec2_sd
           target_label: instance
 
 
+S46 :
+1.all instances are up.. and prometheus able to get the node exporter info..
+as we used ec2 service discovery config as above
+2.cpu usage calculation -
+    top command gives cpu usage info
+     user
+     system
+     niceness
+     idle
+     cpu usage= 100-idle%
 
+ node_cpu_seconds_total{mode="idle"} - idle%
+node_cpu_seconds_total{mode="idle"}- cpu usage %
 
+CPU usage :100-(sum(rate(node_cpu_seconds_total{mode="idle",instance="prometheus"}[5m]))/2*100)
+Memory usage - 100-(100*node_memory_MemFree_bytes/node_memory_MemTotal_bytes)
