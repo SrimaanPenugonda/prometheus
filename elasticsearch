@@ -26,7 +26,7 @@ go to cd /etc/filebeat/filebeat.yml file
 and edit the configuratoin
 enable
 give log path ex: /var/log/messages
-at Elastic search ouput
+at Elastic search output
 give ip address of ELK port 9200
 
   hosts: ["172.31.79.115:9200"]
@@ -69,3 +69,5 @@ go to stack management
     u can find the log file
     create index pattern
     now search for the ur index keyword- like service name
+
+Go to 55 minute
