@@ -1,0 +1,71 @@
+s48:
+Elastic SEARCH:index base search
+ELASTIC DATABASE
+
+ELK stack - e for elastic search
+L-logstash
+K-kibana - UI interface for user to view the logs
+Beats- File Beat collects the data and it can send to either logstash/elastic search
+
+Structured data vs unstructured data
+for structured data we can skip the logstash
+
+Logstash is very greedy on memory,very slow always crash
+
+Structured data is more reliable and easier
+
+we have to push our logs to ELK ..
+Elastic search is very costlier and uses big instance types
+create two instances node1 and ELK
+ELK will be big type
+Install ELK in ELK instance
+and install filebeat in node1
+yum install https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.12.1-x86_64.rpm
+
+go to cd /etc/filebeat/filebeat.yml file
+and edit the configuratoin
+enable
+give log path ex: /var/log/messages
+at Elastic search ouput
+give ip address of ELK port 9200
+
+  hosts: ["172.31.79.115:9200"]
+
+go to ELK public port 3.233.217.29
+opens kibana dashboard - UI to check the logs
+go to stack management
+    index management
+u can see the log file...
+logs from node1 published to this ELK
+create index pattern..
+@timestamp
+this unstructured data has to make structured one
+May 17 17:29:31 ip-172-31-20-188 filebeat: 2021-05-17T17:29:31.525Z#011INFO#011[monitoring]#011log/log.go:144#011Non-zero metrics in the last 30s#011{"monitoring": {"metrics": {"beat":{"cpu":{"system":{"ticks":120,"time":{"ms":1}},"total":{"ticks":3190,"time":{"ms":5},"value":3190},"user":{"ticks":3070,"time":{"ms":4}}},"handles":{"limit":{"hard":4096,"soft":1024},"open":12},"info":{"ephemeral_id":"1dcda74a-18bf-4e72-a6cc-1d285bba41f2","uptime":{"ms":720079}},"memstats":{"gc_next":20961584,"memory_alloc":12703496,"memory_total":323366600,"rss":113758208},"runtime":{"goroutines":31}},"filebeat":{"events":{"added":1,"done":1},"harvester":{"open_files":1,"running":1}},"libbeat":{"config":{"module":{"running":0}},"output":{"events":{"acked":1,"active":0,"batches":1,"total":1},"read":{"bytes":338},"write":{"bytes":2507}},"pipeline":{"clients":1,"events":{"active":0,"published":1,"total":1},"queue":{"acked":1}}},"registrar":{"states":{"current":1,"update":1},"writes":{"success":1,"total":1}},"system":{"load":{"1":0,"15":0.05,"5":0.01,"norm":{"1":0,"15":0.05,"5":0.01}}}}}}
+
+go to grokdebug - https://grokdebug.herokuapp.com/
+and create a pattern as below
+%{MONTH:Month} %{MONTHDAY:Monthday} %{HOUR:HH}:%{MINUTE:MM}:%{SECOND:SS} %{HOSTNAME:IP} %{WORD:ServiceName}: %{GREEDYDATA:LogMessage}
+
+go to ELK server
+cat logstash.conf
+cd /etc/logstash/conf.d -
+
+add filter and message give above pattern
+filter {
+      grok {
+        match => { "message" => "%{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}" }
+      }
+    }
+
+now again edit the filebeat.yml file
+and send the log to logstash- comment the above elasticsearch output one
+output.logstash:
+  # The Logstash hosts
+  hosts: ["172.31.79.115:5044"]
+
+go to kibana dashboard - ELK ip address
+go to stack management
+    index management
+    u can find the log file
+    create index pattern
+    now search for the ur index keyword- like service name

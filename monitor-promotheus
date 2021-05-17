@@ -86,3 +86,5 @@ node_cpu_seconds_total{mode="idle"}- cpu usage %
 
 CPU usage :100-(sum(rate(node_cpu_seconds_total{mode="idle",instance="prometheus"}[5m]))/2*100)
 Memory usage - 100-(100*node_memory_MemFree_bytes/node_memory_MemTotal_bytes)
+
+
