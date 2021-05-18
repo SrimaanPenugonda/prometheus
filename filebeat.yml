@@ -28,7 +28,7 @@ filebeat.inputs:
       - /var/log/catalogue.log
       #- c:\programdata\elasticsearch\logs\*
     json.keys_under_root: true
-    json.message_key: msg
+    json.message_key: msg #to understand the json format log messages
     # Exclude lines. A list of regular expressions to match. It drops the lines that are
     # matching any regular expression from the list.
     #exclude_lines: ['^DBG']
