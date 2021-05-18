@@ -23,7 +23,7 @@ and install filebeat in node1
 yum install https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.12.1-x86_64.rpm
 
 go to cd /etc/filebeat/filebeat.yml file
-and edit the configuratoin
+and edit the configuration
 enable
 give log path ex: /var/log/messages
 at Elastic search output
@@ -53,7 +53,7 @@ cd /etc/logstash/conf.d -
 add filter and message give above pattern
 filter {
       grok {
-        match => { "message" => "%{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}" }
+        match => { "message" => "%{MONTH:Month} %{MONTHDAY:Monthday} %{HOUR:HH}:%{MINUTE:MM}:%{SECOND:SS} %{HOSTNAME:IP} %{WORD:ServiceName}: %{GREEDYDATA:LogMessage}" }
       }
     }
 
