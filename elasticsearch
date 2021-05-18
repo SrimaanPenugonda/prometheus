@@ -71,3 +71,16 @@ go to stack management
     now search for the ur index keyword- like service name
 
 Go to 55 minute
+Unstructured log will convert to structured one by logstash and push to elastic search - this will
+show on kibana dashboard - index management .. etc
+
+Now structured log working -
+take catalogue as example
+make catalogue.. from roboshop prjct
+after this we need only log messages related to catalogue
+so create rsyslog config file roboshop.conf file at /etc/rsyslog.d
+and add https://dev.azure.com/DevOps-Batches/DevOps53/_wiki/wikis/DevOps53.wiki/335/rsyslog
+
+add the new log file /var/log/catalogue.log in filebeat.yml file
+
+also add some more config to filebeat.yml file
