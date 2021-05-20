@@ -84,3 +84,12 @@ and add https://dev.azure.com/DevOps-Batches/DevOps53/_wiki/wikis/DevOps53.wiki/
 add the new log file /var/log/catalogue.log in filebeat.yml file
 
 also add some more config to filebeat.yml file
+
+S51:
+- Create a dashboard on Kibana UI
+-Create new dashboard
+    create a new visulaization like lines--
+            select frontend
+    setup continuous logs from frontend
+   docker run --rm -e "HOST=http://host:8080/" -e "NUM_CLIENTS=5" -e "RUN_TIME=10m" -e "ERROR=0" robotshop/rs-load  - Load Run docker command
+   docker run --rm -e "HOST=http://3.237.35.215/" -e "NUM_CLIENTS=20" -e "RUN_TIME=10m" -e "ERROR=0" robotshop/rs-load   -- frontend load run this in workstation server
